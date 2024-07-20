@@ -39,6 +39,10 @@ def register(request):
         return redirect('login')
     return render(request,'taskapp/register.html',{})
 
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
 def loginpage(request):
     if request.method == 'POST':
         username = request.POST.get('uname')
@@ -54,3 +58,34 @@ def loginpage(request):
 
 
     return render(request,'taskapp/login.html',{})
+
+def DeleteTask(request, name):
+    get_task = task.objects.get(user = request.user, task_name = name)
+    get_task.delete()
+    return redirect('home-page')
+
+def Update(request, name):
+     get_task = task.objects.get(user = request.user, task_name = name)
+     get_task.status = True
+     get_task.save()
+     return redirect('home-page')
+
+# def Update(request, name):
+#     tasks = task.objects.filter(user=request.user, task_name=name)
+#     if tasks.exists():
+#         if tasks.count() == 1:
+#             get_task = tasks.first()
+#             get_task.status = True
+#             get_task.save()
+#             messages.success(request, 'Task updated successfully.')
+#         else:
+#             # Handle the case where multiple tasks are found
+#             messages.warning(request, 'Multiple tasks found. Updating the first one.')
+#             get_task = tasks.first()
+#             get_task.status = True
+#             get_task.save()
+#     else:
+#         # Handle the case where no tasks are found
+#         messages.error(request, 'No task found with the given name.')
+
+#     return redirect('home-page')
