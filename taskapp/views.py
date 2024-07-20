@@ -1,11 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import aauthenticate, login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .models import task
 # Create your views here.
 
 def home(request):
-    return render(request, 'taskapp/task.html',{})
+    if request.method == 'POST':
+        task_name = request.POST.get('task')
+        new_task = task(user=request.user,task_name=task_name)
+        new_task.save()
+    
+    all_tasks = task.objects.filter(user = request.user)
+    context = {
+        'tasks': all_tasks
+    }
+    return render(request, 'taskapp/task.html',context)
 
 def register(request):
     if request.method == 'POST':
@@ -29,12 +39,12 @@ def register(request):
         return redirect('login')
     return render(request,'taskapp/register.html',{})
 
-def login(request):
+def loginpage(request):
     if request.method == 'POST':
         username = request.POST.get('uname')
         password = request.POST.get('pass')
 
-        validate_user = aauthenticate(username=username,password=password)
+        validate_user = authenticate(username=username, password=password)
         if validate_user is not None:
             login(request,validate_user)
             return  redirect('home-page')
