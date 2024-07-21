@@ -13,7 +13,7 @@
     <h2>Register</h2>
     {% if messages %}
        {% for message in messages%}
-         <h2 style="color: firebrick;">{{message}} </h2>
+         <p style="color: firebrick;">{{message}} </p>
         {% endfor %}
     {% endif %}
     
@@ -28,16 +28,11 @@
       <div class="input-box">
         <input type="password" placeholder="Enter your password" required name="password">
       </div>
-      <div class="policy">
-      </div>
       <div class="input-box button">
         <input type="Submit" value="Register">
       </div>
       <div class="text">
         <h3>Have an account? <a href="{% url 'login' %}">Login</a></h3>
-      </div>
-      <div class="text">
-        <h3>Forgot Password? <a href="#">Reset</a></h3>
       </div>
     </form>
   </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -59,33 +59,30 @@ def loginpage(request):
 
     return render(request,'taskapp/login.html',{})
 
-def DeleteTask(request, name):
-    get_task = task.objects.get(user = request.user, task_name = name)
+
+
+
+
+def DeleteTask(request, id):
+    get_task = get_object_or_404(task, id=id, user=request.user)
     get_task.delete()
     return redirect('home-page')
 
-def Update(request, name):
-     get_task = task.objects.get(user = request.user, task_name = name)
-     get_task.status = True
-     get_task.save()
-     return redirect('home-page')
+def Update(request, id):
+    get_task = get_object_or_404(task, id=id, user=request.user)
+    get_task.status = True
+    get_task.save()
+    return redirect('home-page')
+
+
+# def DeleteTask(request, name):
+#     get_task = task.objects.get(user = request.user, task_name = name)
+#     get_task.delete()
+#     return redirect('home-page')
 
 # def Update(request, name):
-#     tasks = task.objects.filter(user=request.user, task_name=name)
-#     if tasks.exists():
-#         if tasks.count() == 1:
-#             get_task = tasks.first()
-#             get_task.status = True
-#             get_task.save()
-#             messages.success(request, 'Task updated successfully.')
-#         else:
-#             # Handle the case where multiple tasks are found
-#             messages.warning(request, 'Multiple tasks found. Updating the first one.')
-#             get_task = tasks.first()
-#             get_task.status = True
-#             get_task.save()
-#     else:
-#         # Handle the case where no tasks are found
-#         messages.error(request, 'No task found with the given name.')
+#      get_task = task.objects.get(user = request.user, task_name = name)
+#      get_task.status = True
+#      get_task.save()
+#      return redirect('home-page')
 
-#     return redirect('home-page')
