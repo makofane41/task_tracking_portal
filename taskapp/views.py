@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import task
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+
 
 @login_required
 def home(request):
@@ -37,10 +37,11 @@ def register(request):
         new_user = User.objects.create_user(username = username,email=email, password=password )
         new_user.save()
         messages.success(request,'Successfully registered')
-        #redirect user to login page
+        
         return redirect('login')
     return render(request,'taskapp/register.html',{})
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('login')
@@ -57,31 +58,18 @@ def loginpage(request):
         else:
             messages.error(request,'wrong username or password')
             return redirect('login')
-
-
+    
     return render(request,'taskapp/login.html',{})
 
-
+@login_required
 def DeleteTask(request, id):
     get_task = get_object_or_404(task, id=id, user=request.user)
     get_task.delete()
     return redirect('home-page')
 
+@login_required
 def Update(request, id):
     get_task = get_object_or_404(task, id=id, user=request.user)
     get_task.status = True
     get_task.save()
     return redirect('home-page')
-
-
-# def DeleteTask(request, name):
-#     get_task = task.objects.get(user = request.user, task_name = name)
-#     get_task.delete()
-#     return redirect('home-page')
-
-# def Update(request, name):
-#      get_task = task.objects.get(user = request.user, task_name = name)
-#      get_task.status = True
-#      get_task.save()
-#      return redirect('home-page')
-
