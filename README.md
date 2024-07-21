@@ -6,7 +6,7 @@ This is a Django-based Task Tracking Portal application. This README provides in
 
 - Python 3.10 or later installed.
 - Pip installed.
-- currently  sqlite3 running , MySQL database server running optional, dialect can be changed to  .
+- currently  sqlite3 running, dialect can be changed
 
 ## Running the application
 
@@ -34,7 +34,7 @@ This is a Django-based Task Tracking Portal application. This README provides in
 
 ## Configuration
 
-### Configure the Database
+### EXAMPLE: Configure the MYSQL dialect 
 
 Update the `settings.py` file to configure the external MySQL database:
 
