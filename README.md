@@ -21,7 +21,7 @@ This is a Django-based Task Tracking Portal application. This README provides in
 
     docker run -d -p 8000:8000  giv462/task-track:dev
 
-    docker run -d -p 8000:8000  giv462/task-track:latest   
+    docker run -d -p 8000:8000  giv462/task-track:latest     <stable>
 
 ### Local setup
 
