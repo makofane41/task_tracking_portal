@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import task
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def home(request):
     if request.method == 'POST':
         task_name = request.POST.get('task')
@@ -58,9 +60,6 @@ def loginpage(request):
 
 
     return render(request,'taskapp/login.html',{})
-
-
-
 
 
 def DeleteTask(request, id):

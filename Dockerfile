@@ -7,7 +7,8 @@ WORKDIR /task_tracking
 COPY requirements.txt /task_tracking/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-
+RUN python manage.py makemigrations
+RUN python manage.py migrate
 COPY . /task_tracking/
 EXPOSE 8000
 CMD ["python","manage.py","runserver","0.0.0.0:8000"]
